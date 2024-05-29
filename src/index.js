@@ -1,27 +1,19 @@
-import Auth from "./utils/Auth";
-import './styles/main.css'
-import './styles/main.scss'
-const API_KEY = 'AIzaSyCh6G3Hz-nINlEsHN6Cfuc9Czc6hWKEe3A';
-const CLIENT_ID = '501659433282-1c9fa8baja97dqbcp6qoqd5c6drnvaks.apps.googleusercontent.com'
+import Auth from "@utils/Auth";
+import "@styles/main.css";
+import "@styles/main.scss";
+import renderRoute from "@utils/Routes";
+const API_KEY = process.env.API_KEY;
+const CLIENT_ID = process.env.CLIENT_ID;
+
 const main = async () => {
-    try {
-      let response = await Auth(API_KEY, CLIENT_ID);
-      if(response) {
-          let email = await getEmail();
-          console.log(email)
-      }
-    } catch (e) {
-      console.log(e);
+  try {
+    let response = await Auth(API_KEY, CLIENT_ID);
+    if (response) {
+      await renderRoute()
     }
-  };
-  async function getEmail() {
-    try {
-      let response = await gapi.client.gmail.users.getProfile({
-        userId: "me",
-      });
-      return response.result.emailAddress;
-    } catch (e) {
-      console.log(e);
-    }
+  } catch (e) {
+    console.log(e);
   }
-  window.addEventListener("load", main);
+};
+window.addEventListener("load", main);
+window.addEventListener("hashchange", renderRoute);

@@ -35,7 +35,6 @@ function gisLoaded(client_id) {
 function handleAuthClick() {
   return new Promise((resolve, reject) => {
     if (gapiInited && gisInited) {
-      document.getElementById("authorize_button").style.visibility = "visible";
       tokenClient.callback = async (resp) => {
         if (resp.error !== undefined) {
           reject(resp.error);
